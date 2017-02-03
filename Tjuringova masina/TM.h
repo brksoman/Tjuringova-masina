@@ -42,15 +42,15 @@ class TM
 	{
 		struct Elem
 		{
-			f_pair a;
+			f_pair* a;
 			Elem* sl;
 
-			Elem(f_pair aa, Elem* ssl = nullptr) : a(aa), sl(ssl) {}
-			Elem() : sl(nullptr) {}
+			Elem(f_pair* aa = nullptr, Elem* ssl = nullptr) : a(aa), sl(ssl) {}
+			~Elem() { delete a; }
 		};
 
 		Elem* prvi, * posl;
-
+		
 	public:
 		f_list() : prvi(nullptr), posl(nullptr) {}
 		// Konstruktori kopiranja i premestanja (potencijalno nepotrebni)
@@ -74,13 +74,17 @@ class TM
 		f_out operator () (const f_in&) const;
 		f_out operator () (const string& qq, char cc) const { return (*this)(f_in(qq, cc)); }
 
-		// Operator dodavanja nove instance
+		// Operatori dodavanja nove instance
 		f_list& operator += (const f_pair& f_instance)
 		{
 			insert(f_instance);
 			return *this;
 		}
-		
+		f_list& operator += (f_pair* pf_instance)
+		{
+			insert(pf_instance);
+			return *this;
+		}
 
 	private:
 		// Pomocne metode
@@ -91,7 +95,14 @@ class TM
 		}
 		void cop(const f_list&);
 		void del();
-		void insert(const f_pair&);
+		void insert(const f_pair& f_instance) { insert(new f_pair(f_instance)); }
+		void insert(f_pair* pf_instance)
+		{
+			Elem * novi = new Elem(pf_instance);
+			if (prvi == nullptr) { prvi = novi; }
+			else { posl->sl = novi; }
+			posl = novi;
+		}
 	};
 
 
@@ -104,6 +115,11 @@ public:
 	TM& operator += (const f_pair& f_instance)
 	{
 		f += f_instance;
+		return *this;
+	}
+	TM& operator += (f_pair* pf_instance)
+	{
+		f += pf_instance;
 		return *this;
 	}
 

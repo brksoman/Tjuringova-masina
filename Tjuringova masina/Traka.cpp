@@ -4,15 +4,8 @@ void Traka::move(int r)
 {
 	glava += r;
 
-	while (glava < 0)
-	{
-		s = b + s;
-		glava++;
-	}
-	while (glava >= size())
-	{
-		s = s + b;
-	}
+	while (glava < 0) { s = b + s; glava++; }
+	while (glava >= size()) { s = s + b; }
 }
 
 void Traka::clean()

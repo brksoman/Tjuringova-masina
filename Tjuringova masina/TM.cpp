@@ -54,9 +54,9 @@ istream& operator >> (istream& in, TM& tm)
 	for (int i = 0; i < n; i++)
 	{
 		getline(in, string());
-		TM::f_pair f_instance;
-		in >> f_instance;
-		tm += f_instance;
+		TM::f_pair* pf_instance = new TM::f_pair;
+		in >> *pf_instance;
+		tm += pf_instance;
 	}
 	return in;
 }
@@ -74,28 +74,19 @@ void TM::f_list::del()
 {
 	while (prvi != nullptr)
 	{
-		Elem *temp = prvi;
+		Elem * temp = prvi;
 		prvi = prvi->sl;
 		delete temp;
 	}
 	posl = nullptr;
 }
 
-void TM::f_list::insert(const f_pair& f)
-{
-	Elem * novi = new Elem(f);
-
-	if (prvi == nullptr) { prvi = novi; }
-	else { posl->sl = novi; }
-	posl = novi;
-}
-
 TM::f_out TM::f_list::operator () (const f_in& in) const
 {
 	Elem* temp = prvi;
-	while ((temp != nullptr) && (temp->a.in != in)) { temp = temp->sl; }
+	while ((temp != nullptr) && (temp->a->in != in)) { temp = temp->sl; }
 
-	if (temp != nullptr) { return temp->a.out; }
+	if (temp != nullptr) { return temp->a->out; }
 	throw char();
 }
 
