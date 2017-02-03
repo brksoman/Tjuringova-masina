@@ -1,5 +1,6 @@
 #include "TM.h"
 
+// ---------------------------------------------------------------------------- Pomocne funkcije ----------------------
 int read_int(istream& in)
 {
 	char c;
@@ -22,6 +23,60 @@ string read_elem(istream& in)
 	return elem;
 }
 
+// ---------------------------------------------------------------------------- Osnovne metode klasa ------------------
+void TM::f_list::cop(const f_list& f)
+{
+	for (Elem* temp = f.prvi; temp != nullptr; temp = temp->sl)
+	{
+		insert(temp->a);
+	}
+}
+
+void TM::f_list::del()
+{
+	while (prvi != nullptr)
+	{
+		Elem * temp = prvi;
+		prvi = prvi->sl;
+		delete temp;
+	}
+	posl = nullptr;
+}
+
+// ---------------------------------------------------------------------------- Operator za trazenje sledeceg stanja --
+TM::f_out TM::f_list::operator () (const f_in& in) const
+{
+	Elem* temp = prvi;
+	while ((temp != nullptr) && (temp->a->in != in)) { temp = temp->sl; }
+
+	if (temp != nullptr) { return temp->a->out; }
+	throw char();
+}
+
+// ---------------------------------------------------------------------------- Metoda za resavanje trake -------------
+bool TM::solve(Traka& t) const
+{
+	string q = q0;
+
+	try
+	{
+		while ((q != q_ok) && (q != q_nok))
+		{
+			f_out next = f(q, t.read());
+			q = next.q;
+			t.put(next.a);
+			t += next.r;
+		}
+	}
+	catch (char) { q = q_nok; }
+
+	t.clean();
+	return q == q_ok;
+}
+
+
+
+// ---------------------------------------------------------------------------- Prijateljske f-je za ispis ------------
 istream& operator >> (istream& in, TM::f_pair& f_instance)
 {
 	char c, c1, c2;
@@ -59,54 +114,4 @@ istream& operator >> (istream& in, TM& tm)
 		tm += pf_instance;
 	}
 	return in;
-}
-
-
-void TM::f_list::cop(const f_list& f)
-{
-	for (Elem* temp = f.prvi; temp != nullptr; temp = temp->sl)
-	{
-		insert(temp->a);
-	}
-}
-
-void TM::f_list::del()
-{
-	while (prvi != nullptr)
-	{
-		Elem * temp = prvi;
-		prvi = prvi->sl;
-		delete temp;
-	}
-	posl = nullptr;
-}
-
-TM::f_out TM::f_list::operator () (const f_in& in) const
-{
-	Elem* temp = prvi;
-	while ((temp != nullptr) && (temp->a->in != in)) { temp = temp->sl; }
-
-	if (temp != nullptr) { return temp->a->out; }
-	throw char();
-}
-
-
-bool TM::solve(Traka& t) const
-{
-	string q = q0;
-
-	try
-	{
-		while ((q != q_ok) && (q != q_nok))
-		{
-			f_out next = f(q, t.read());
-			q = next.q;
-			t.put(next.a);
-			t += next.r;
-		}
-	}
-	catch (char) { q = q_nok; }
-
-	t.clean();
-	return q == q_ok;
 }

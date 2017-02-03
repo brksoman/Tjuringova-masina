@@ -10,8 +10,8 @@ class TM
 	// Clan domena funkcije algoritma
 	struct f_in
 	{
-		string q;
-		char a;
+		string q;	// Stanje
+		char a;		// Slovo
 
 		f_in(const string& qq, char aa) : q(qq), a(aa) {}
 		f_in() = default;
@@ -23,7 +23,7 @@ class TM
 	// Clan koodomena funkcije algoritma
 	struct f_out : public f_in
 	{
-		int r;
+		int r;		// Pomeraj
 
 		f_out(const string& qq, char aa, int rr) : f_in(qq, aa), r(rr) {}
 		f_out() = default;
@@ -40,6 +40,7 @@ class TM
 	// Funkcija algoritma - lista instanci
 	class f_list
 	{
+		// Cvor liste
 		struct Elem
 		{
 			f_pair* a;
@@ -74,10 +75,10 @@ class TM
 		f_out operator () (const f_in&) const;
 		f_out operator () (const string& qq, char cc) const { return (*this)(f_in(qq, cc)); }
 
-		// Operatori dodavanja nove instance
+		// Operatori dodavanja nove instance, preko upucivaca ili pokazivaca
 		f_list& operator += (const f_pair& f_instance)
 		{
-			insert(f_instance);
+			insert(new f_pair(f_instance));
 			return *this;
 		}
 		f_list& operator += (f_pair* pf_instance)
@@ -95,7 +96,6 @@ class TM
 		}
 		void cop(const f_list&);
 		void del();
-		void insert(const f_pair& f_instance) { insert(new f_pair(f_instance)); }
 		void insert(f_pair* pf_instance)
 		{
 			Elem * novi = new Elem(pf_instance);

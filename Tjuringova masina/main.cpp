@@ -6,6 +6,7 @@ using namespace std;
 
 int main()
 {
+	// Faza 1
 	string ime_fajla_programa;
 	do
 	{
@@ -22,6 +23,7 @@ int main()
 			program >> tm;
 			program.close();
 
+			// Faza 2
 			string traka_string;
 			do
 			{
