@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Traka.h">
+    <ClInclude Include="tape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TM.h">
+    <ClInclude Include="turing-machine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,10 +26,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TM.cpp">
+    <ClCompile Include="tape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Traka.cpp">
+    <ClCompile Include="turing-machine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
