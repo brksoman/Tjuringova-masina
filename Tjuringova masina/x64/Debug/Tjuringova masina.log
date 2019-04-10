@@ -1,8 +1,0 @@
-﻿  Traka.cpp
-c:\users\alexa\documents\github\tjuringova-masina\tjuringova masina\traka.h(37): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  TM.cpp
-c:\users\alexa\documents\github\tjuringova-masina\tjuringova masina\traka.h(37): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  main.cpp
-c:\users\alexa\documents\github\tjuringova-masina\tjuringova masina\traka.h(37): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-  Tjuringova masina.vcxproj -> C:\Users\Alexa\Documents\GitHub\Tjuringova-masina\x64\Debug\Tjuringova masina.exe
